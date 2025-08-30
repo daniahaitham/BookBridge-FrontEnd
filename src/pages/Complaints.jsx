@@ -1,7 +1,10 @@
 import React from "react";
+import {Link} from "react-router-dom";
+
 
 function Complaints() {
     return (
+
         <section>
             <h1>Complaints</h1>
             <p>
@@ -27,9 +30,13 @@ function Complaints() {
                 </div>
 
                 <div>
+
+                    {/*is is ok that it relaod auto?*/}
                     <button type="submit">SUBMIT</button>
                 </div>
             </form>
         </section>
     );
 }
+
+export default Complaints;
