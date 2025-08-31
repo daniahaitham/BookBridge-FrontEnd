@@ -1,17 +1,25 @@
-  
+import { books } from "../data/books.js";  
+
+
+
 function SpesificBook() {
+    const { id } = useParams(); //param is the hook that let me read the value from the URL 
+    const book = books.find(b => String(b.id) === id);
+
+    if (!books.length) return <p>No books yet.</p>;
+
+
+    //here i should handle : LOADING AND ERROR
     return (
+
+
         <div>
-            <h1>Book Details</h1>
-            <p>Title: The Great Gatsby</p>
-            <p>Author: F. Scott Fitzgerald</p>
-            <p>Description: A novel set in the 1920s that explores themes of wealth, society, and the American Dream.</p>
-
-           {/* <img src="path_to_image.jpg" alt="The Great Gatsby" /> */}
-
-            <p>exchangeType: </p>
-            <p>owner: User A</p>
-            <p>Note by owner: </p>
+     
+            <h1>{book.title}</h1>
+            <p>Author: {book.author}</p>
+            <p>Owner: {book.owner}</p>
+            <p>Type: {book.type}</p>
+   
 
         </div>
     );

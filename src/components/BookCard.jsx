@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
 
-function BookCard({ id, title, owner, type }) {
+function BookCard({ id, title, owner, type }) {//the data flow from home to here is via props 
   return (
-       <Link to="/SpesificBook" className="book-card">
+       <Link to={`/SpesificBook/${id}`} className="book-card">
       <div className="thumb" />
       <h3>{title}</h3>
       <p>{owner}</p>
