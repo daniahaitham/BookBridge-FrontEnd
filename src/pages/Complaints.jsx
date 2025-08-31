@@ -1,8 +1,30 @@
 import React from "react";
 import {Link} from "react-router-dom";
-
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Complaints() {
+    const navigate = useNavigate();
+
+    const [form, setForm] = useState({
+        subject: "",
+        description: "",
+        priority: "low"
+    });
+
+    //handle the submission error
+    function onSubmit(e) {
+        e.preventDefault();
+        console.log("SUBMITted ", form);
+        if (!form.subject || !form.description) {
+            alert("Please fill required fields");
+            return;
+        }
+
+          navigate("/home");
+
+    }
+
     return (
 
         <section>
@@ -12,28 +34,17 @@ function Complaints() {
         and get back to you as soon as possible.
             </p>
 
-            <form>
-                <div>
-                    <input type="text" placeholder="Subject / Title" />
-                </div>
-                
-                <div>
-                     <textarea placeholder="Description"></textarea>
-                </div>
+            <form onSubmit={onSubmit}>
+               
+                    <input type="text" placeholder="Subject" value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} />
+                    <textarea placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}></textarea>
 
-                <div>
-                    <select>
+                    <select name="priority" value={form.priority} onChange={onChange}>
                       <option value="low">Low</option>
                       <option value="medium">Medium</option>
                       <option value="high">High</option>
                     </select>
-                </div>
-
-                <div>
-
-                    {/*is is ok that it relaod auto?*/}
                     <button type="submit">SUBMIT</button>
-                </div>
             </form>
         </section>
     );

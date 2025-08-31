@@ -9,6 +9,7 @@ import Home from "./pages/Home.jsx";
 import Complaints from "./pages/Complaints.jsx";
 import SpesificBook from "./pages/SpesificBook.jsx";
 import BookCard from "./components/BookCard.jsx";
+import Profile from "./pages/Profile.jsx";
 
 
 function App() {
@@ -22,7 +23,8 @@ function App() {
         <Route path="/AboutUs" element={<AboutUs />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/Complaints" element={<Complaints />} />
-        <Route path="/SpesificBook" element={<SpesificBook />} />
+        <Route path="/SpesificBook/:id" element={<SpesificBook />} />
+        <Route path="/Profile" element={<Profile />} />
       </Routes>
        <Footer />
     </BrowserRouter>

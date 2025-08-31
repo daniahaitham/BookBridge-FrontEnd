@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+    const navigate = useNavigate();
 
     const [form,setForm] = useState({ //i use the useState to create the state and setter 
 
@@ -13,17 +14,26 @@ function Signup() {
         phone: ""
     })
 
-
+    //per input..
     function onChange(e) {//on change whenever its called its updating the state with the needed values. 
     setForm({ ...form, [e.target.name]: e.target.value });//name is the field name 
     }
-    
 
+    //for the form submission
     function onSubmit(e){ //it will know the values becouse of the current state of the form 
         e.preventDefault();//prevent refreshing when submitting
-
+      console.log("SUBMITted ");
         //later from here i will send data to backend
-    }
+        if (!form.name || !form.email || !form.password) {
+            alert("Please fill required fields");
+            return;
+        }
+        navigate("/login");
+
+
+  }
+
+
 
   return (
     <>
@@ -44,7 +54,7 @@ function Signup() {
         <input name="email" placeholder="Email" type="email" value={form.email} onChange={onChange} />
         <input name="password" type="password" placeholder="Password" value={form.password} onChange={onChange} />
         <input name="confirmPassword" type="password" placeholder="Confirm Password" value={form.confirmPassword} onChange={onChange} />
-        <input name="phone" placeholder="Phone" type="number" value={form.phone} onChange={onChange} />
+        <input name="phone" placeholder="Phone" type="tel" value={form.phone} onChange={onChange} />
         <button type="submit">Signup</button>
       </form>
       </div>
