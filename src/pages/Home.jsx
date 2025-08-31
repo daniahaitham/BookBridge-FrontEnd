@@ -18,13 +18,16 @@ function Home() {
                <BookCard key={b.id} {...b} />
                ))}
                  </div>
-          
 
         
              <button onClick={() => navigate("/complaints")}>
-             + Add your Complaint for Admins
-            </button>
+             + Add your Comsplaint for Admins
+              </button>
+
+
+            
          </div>
+
     );
 }
 

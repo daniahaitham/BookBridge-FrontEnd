@@ -10,6 +10,8 @@ import Complaints from "./pages/Complaints.jsx";
 import SpesificBook from "./pages/SpesificBook.jsx";
 import BookCard from "./components/BookCard.jsx";
 import Profile from "./pages/Profile.jsx";
+import AdminComplaints from "./pages/AdminComplaints.jsx";
+
 
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
         <Route path="/Complaints" element={<Complaints />} />
         <Route path="/SpesificBook/:id" element={<SpesificBook />} />
         <Route path="/Profile" element={<Profile />} />
+        <Route path="/AdminComplaints" element={<AdminComplaints />} />
       </Routes>
        <Footer />
     </BrowserRouter>
