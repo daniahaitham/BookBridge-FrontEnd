@@ -3,32 +3,47 @@ import {Link} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import BookCard from "../components/BookCard.jsx";
 import { books } from "../data/books.js";
+import "../Styles/Home.css";
 
 
 function Home() {
 
-    const [bookState, setBookState] = useState(books);
-    //isnt setBookState is for chaning on the books by user? i think this is not needed here !
-   const navigate = useNavigate();
-    return (
-         <div>
-        <h1>Explore thousands of books — borrow, buy, or exchange.</h1>
-                <div className="grid">
-                 {bookState.map(b => (
-               <BookCard key={b.id} {...b} />
-               ))}
-                 </div>
+const navigate = useNavigate();
 
-        
-             <button onClick={() => navigate("/complaints")}>
-             + Add your Comsplaint for Admins
-              </button>
+  return (
+    <main className="home-page">
+      <div className="home-container">
+        <h1 className="home-title">
+          Explore thousands of books — borrow, buy, or exchange.
+        </h1>
 
+        <div className="home-toolbar">
+          <label htmlFor="filter" className="filter-label">Filter by</label>
+          <select id="filter" className="filter-select" defaultValue="">
+            <option value="" disabled>—</option>
+            <option value="newest">Newest</option>
+            <option value="popular">Most Popular</option>
+            <option value="price_low">Price: Low → High</option>
+            <option value="price_high">Price: High → Low</option>
+          </select>
+        </div>
 
-            
-         </div>
+        <section className="book-grid">
+          {books.map((b) => (
+            <div className="book-grid-item" key={b.id}>
+              <BookCard {...b} />
+            </div>
+          ))}
+        </section>
+      </div>
 
-    );
+      <button
+        className="complaint-btn"
+        onClick={() => navigate("/Complaints")}
+      >
+        + Add your Complaint for Admins
+      </button>
+    </main>
+  );
 }
-
 export default Home;

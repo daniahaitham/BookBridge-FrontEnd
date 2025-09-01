@@ -1,27 +1,27 @@
+import { Link ,useNavigate} from "react-router-dom";
 import logo from "../assets/logo.png";
-import profileB from "../assets/profileB.png"; 
-import backtohome from "../assets/backtohome.png"; 
-import { Link} from "react-router-dom";
-
-
+import backIcon from "../assets/backtohome.png";
+import profileIcon from "../assets/profileB.png";
+import "../styles/Navbar.css";
 
 function Navbar() {
+    const navigate = useNavigate();
+   return (
+    <nav>
+      <button onClick={() => navigate(-1)} >
+        <img src={backIcon} alt="Back" />
+      </button>
 
-     return (
-        <nav className="navbar">  
 
-            <Link to="/" className="back">
-                <img src={backtohome} alt="Back to Home" />
-            </Link>
-            <Link to="/" className="logo">
-                <img src={logo} alt="BookBridge logo" />
-            </Link>
+      <Link to="/" className="navbar-logo">
+        <img src={logo} alt="BookBridge Logo" />
+      </Link>
 
-            <Link to="/Profile" className="profile">
-                <img src={profileB} alt="Profile" />
-            </Link>
-        </nav>
-    );
+       
+      <Link to="/profile"  aria-label="Profile">
+        <img src={profileIcon} alt="Profile" />
+      </Link>
+    </nav>
+  );
 }
-
 export default Navbar;

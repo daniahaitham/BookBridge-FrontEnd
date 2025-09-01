@@ -2,6 +2,8 @@ import React from "react";
 import {Link} from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../Styles/Complaints.css";
+
 
 function Complaints() {
     const navigate = useNavigate();
@@ -15,15 +17,23 @@ function Complaints() {
     //handle the submission error
     function onSubmit(e) {
         e.preventDefault();
-        console.log("SUBMITted ", form);
         if (!form.subject || !form.description) {
             alert("Please fill required fields");
             return;
         }
 
-          navigate("/home");
+          navigate("/Home");
+
+
+
 
     }
+
+        function onChange(e) {
+            const { name, value } = e.target;
+            setForm({ ...form, [name]: value });
+        }
+
 
     return (
 

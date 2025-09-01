@@ -6,9 +6,9 @@ import Signup from "./pages/Signup.jsx";
 import Login from "./pages/Login.jsx";
 import AboutUs from "./pages/AboutUs.jsx";
 import Home from "./pages/Home.jsx";
-import Complaints from "./pages/Complaints.jsx";
 import SpesificBook from "./pages/SpesificBook.jsx";
 import BookCard from "./components/BookCard.jsx";
+import Complaints from "./pages/Complaints.jsx";
 import Profile from "./pages/Profile.jsx";
 import AdminComplaints from "./pages/AdminComplaints.jsx";
 
@@ -24,8 +24,8 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/AboutUs" element={<AboutUs />} />
         <Route path="/Home" element={<Home />} />
-        <Route path="/Complaints" element={<Complaints />} />
         <Route path="/SpesificBook/:id" element={<SpesificBook />} />
+        <Route path="/Complaints" element={<Complaints />} />
         <Route path="/Profile" element={<Profile />} />
         <Route path="/AdminComplaints" element={<AdminComplaints />} />
       </Routes>

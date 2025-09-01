@@ -1,0 +1,156 @@
+/* ========== Book Details — SpesificBook.css ========== */
+:root{
+  --bg: #fffdf6;             /* page background (very light cream) */
+  --fg: #354035;             /* main text (muted deep olive/gray) */
+  --muted: #6f776f;          /* secondary text */
+  --sand: #e7dcbc;           /* sand blocks (tags/footer strip) */
+  --sand-200:#efe6ca;        /* lighter sand */
+  --frame:#b79d66;           /* frame/border (brown-gold) */
+  --pink:#f39ab2;            /* “Availability” label */
+}
+
+/* Reset-ish */
+.bd-page, .bd-wrap, .bd-info, .bd-side { box-sizing: border-box; }
+.bd-page * { margin: 0; padding: 0; }
+
+/* Page */
+.bd-page{
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100dvh;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+  line-height: 1.55;
+}
+
+/* Outer content width + generous breathing room */
+.bd-wrap{
+  max-width: 1120px;               /* wide like your wireframe */
+  margin: 0 auto;
+  padding: 48px 28px 64px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr; /* left text / right image */
+  gap: 48px;
+}
+
+/* Heading (Title – Author) */
+.bd-head{
+  font-size: clamp(28px, 2.6vw, 34px);
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  margin-bottom: 14px;
+}
+.bd-head .sep{ margin: 0 8px; }
+
+/* Description paragraph (the long lorem block) */
+.bd-desc{
+  color: var(--muted);
+  font-size: 15.5px;
+  max-width: 56ch;                /* the “wrapped” look in wireframe */
+  margin-bottom: 18px;
+}
+
+/* Tag row (Exchange Type / Price) */
+.bd-tags{
+  display: flex;
+  gap: 14px;
+  margin: 14px 0 22px;
+}
+.tag{
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 18px;
+  border-radius: 14px;
+  background: var(--sand);
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.03);
+}
+.tag.light{ background: var(--sand-200); }
+
+/* Owner line + note */
+.bd-owner{
+  font-size: 14.5px;
+  margin: 10px 0 10px;
+}
+.bd-owner strong{ font-weight: 800; }
+
+.bd-note{
+  font-size: 14.5px;
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+/* Right side: Availability label + Framed cover */
+.bd-side{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.bd-side-label{
+  font-weight: 800;
+  color: var(--pink);
+  font-size: 18px;
+  margin-top: 4px;
+}
+
+/* Image frame sized like the mock (almost square, roomy border) */
+.bd-frame{
+  width: min(420px, 90%);
+  aspect-ratio: 3 / 4;                     /* classic book portrait */
+
+  border-radius: 6px;
+  position: relative;
+ 
+  /* the faint inner gutter */
+}
+
+/* Cover image fills frame but stays under the cross placeholder */
+.bd-frame img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: normal;
+  /* if no image is available, frame shows the X placeholder */
+}
+
+/* “Book not found.” state */
+.bd-empty{
+  max-width: 1120px;
+  margin: 48px auto;
+  padding: 14px 18px;
+  background: #fff;
+  border: 2px dashed var(--sand);
+  color: var(--muted);
+  border-radius: 10px;
+}
+
+/* Optional footer strip imitation (if your layout has one) */
+.bd-page::after{
+  content: "";
+  display: block;
+  height: 28px;
+  background: var(--sand-200);
+  margin-top: 48px;
+}
+
+/* ---------- Responsiveness ---------- */
+@media (max-width: 980px){
+  .bd-wrap{
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .bd-desc, .bd-note{ max-width: 65ch; }
+  .bd-side{ align-items: flex-start; }
+  .bd-side-label{ margin-left: 6px; }
+}
+@media (max-width: 520px){
+  .bd-wrap{ padding: 32px 18px 48px; }
+  .bd-head{ font-size: 24px; }
+  .tag{ height: 34px; padding: 0 14px; font-size: 13.5px; }
+  .bd-frame{ width: 100%; }
+}

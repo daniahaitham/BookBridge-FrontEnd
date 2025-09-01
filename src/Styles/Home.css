@@ -1,0 +1,31 @@
+/* Page */
+.home-page{
+  position:relative;
+  background:#f7f6f1;
+  min-height:100vh;
+  padding:72px 20px 80px;        /* room for navbar + footer */
+}
+.home-container{ max-width:5000px; margin:0 auto; }
+
+.home-title{
+  font-size:29px; font-weight:800; color:#5a5135;
+  text-align:center; margin: 20px;
+}
+
+/* toolbar */
+.home-toolbar{ display:flex; gap:10px; justify-content:center; align-items:center; margin:0 0 22px;  }
+.filter-label{ color:#6b654d; font-weight:600; }
+.filter-select{
+  padding:8px 12px; border:1px solid #cfc8b6; border-radius:8px; height: 28px; background:#fff; color:#4a473a;
+}
+
+/* grid */
+.book-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap:24px;
+}
+
+/* each grid item (wrapper around the card link) */
+.book-grid-item{ list-style:none; }
+

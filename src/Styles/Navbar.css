@@ -1,0 +1,49 @@
+/* Navbar.css */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+
+  /* layout: back | logo | profile */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 50px; /* fixed smaller height */
+  padding: 0 16px;
+
+  background: rgba(182, 159, 114, 0.55);
+  backdrop-filter: blur(4px);
+  border-bottom: 1px solid rgba(182, 159, 114, 0.8);
+}
+
+/* reset */
+nav button, nav a {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+/* back icon */
+/* back button image */
+nav button img {
+  height: 35px;   /* back icon size */
+  width: auto;
+}
+
+/* logo image (center) */
+nav .navbar-logo img {
+  padding: 11px 0;
+  height: 150px;   /* logo size */
+  width: 160px;
+     
+}
+
+/* profile image (right) */
+nav a[aria-label="Profile"] img {
+  height: 55px;   /* profile icon size */
+  width: auto;
+}
+

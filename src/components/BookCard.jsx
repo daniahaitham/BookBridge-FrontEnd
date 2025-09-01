@@ -1,17 +1,19 @@
 import { Link } from "react-router-dom";
+import "../Styles/BookCard.css";
 
 
-function BookCard({ id, title, owner, type }) {//the data flow from home to here is via props 
+function BookCard({ id, title, owner, exchangeType, cover }) {
   return (
-       <Link to={`/SpesificBook/${id}`} className="book-card">
-      <div className="thumb" />
-      <h3>{title}</h3>
-      <p>{owner}</p>
-      <div className="chiprow">
-          <span className="chip">{type}</span>
-         </div>
-      </Link>
+    <Link to={`/spesificBook/${id}`} className="book-card"> {/*while the sedning of the sata from the home to the card was by props now the card build this link via the data recived. */} 
+      <div className="book-card">
+        <img src={cover} alt={title} className="book-cover" />
+        <h3>{title}</h3>
+        <p>{owner}</p>
+        <span className="tag">{exchangeType}</span>
+      </div>
+    </Link>
   );
 }
+
 
 export default BookCard;

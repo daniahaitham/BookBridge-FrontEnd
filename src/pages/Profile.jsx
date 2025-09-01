@@ -1,68 +1,85 @@
-import React from "react";
+import React, { useState } from "react";
 import BookCard from "../components/BookCard";
-import { useState } from "react";
-import { books } from "../data/books";
+import "../Styles/Profile.css";
+import book from "../assets/book.jpg";
+import book1 from "../assets/book1.webp";
+import book2 from "../assets/book2.jpg";
+import book3 from "../assets/book3.jpg";
+
+
 
 function Profile() {
+  const [profile, setProfile] = useState({ name:"", email:"", password:"", phone:"" });
 
-    const [profile, setProfile] = useState({
-        name: "",
-        email: "",
-        password: "",
-        phone: ""
-    });
 
-     function onChange(e) {
-    const { name, value } = e.target;
+
+  function onChange({ target:{name, value} }) {
     setProfile(p => ({ ...p, [name]: value }));
   }
 
+  
+  
+  const offeredBooks = [
+    {
+      id: 4,
+      title: "Clean Code",
+      owner: "Me",
+      exchangeType: "Sell",
+      cover: book,
+    },
+    {
+      id: 5,
+      title: "Deep Learning",
+      owner: "Me",
+      exchangeType: "Exchange",
+      cover: book1,
+    }
+  ];
 
 
-  //those will later start empty then filled with data from the API using useEffect
-  const [offeredBooks, setOfferedBooks] = useState([
-    { id: 1, title: "Clean Code", type: "sell", owner: "Me" },
-    { id: 2, title: "Deep Learning", type: "exchange", owner: "Me" },
-    { id: 3, title: "React Basics", type: "borrow", owner: "Me" },
-  ]);
+   const gotBooks = [
+    {
+      id: 6,
+      title: "Dune",
+      owner: "Ali",
+      exchangeType: "Borrowed",
+        cover: book2,
+    },
+     {
+      id: 7,
+      title: "Dune",
+      owner: "Ali",
+      exchangeType: "Borrowed",
+        cover: book3,
+    }
+  ];
+  return (
+    <main className="prof-page">
+      <h2 className="prof-title">My Profile</h2>
 
-const [gotBooks, setGotBooks] = useState([
-    { id: 4, title: "Dune", type: "borrowed", owner: "Ali" },
-    { id: 5, title: "Atomic Habits", type: "bought", owner: "Sara" },
-    { id: 6, title: "Sapiens", type: "borrowed", owner: "Omar" },
-  ]);
-
-    return (
-    <>
-            <h2>My Profile</h2>
+        <div className="prof-fields">
+          <div className="prof-field">{profile.name || "Name"}</div>
+          <div className="prof-field">{profile.email || "Email"}</div>
+          <div className="prof-field">{profile.password ? "••••••" : "Password"}</div>
+          <div className="prof-field">{profile.phone || "Phone num"}</div>
+        </div>
 
 
-            <div>
-               <input placeholder="Name" value={profile.name} onChange={onChange} name="name" />
-               <input placeholder="Email" value={profile.email} onChange={onChange} name="email" />
-               <input placeholder="Password" type="password" value={profile.password} onChange={onChange} name="password" />
-               <input placeholder="Phone num" value={profile.phone} onChange={onChange} name="phone" />
-            </div>
+      <section className="prof-section">
+        <h3 className="prof-heading">Books I offer</h3>
+        <div className="prof-grid">
+          {offeredBooks.map(b => <BookCard key={b.id} {...b} />)}
+        </div>
+      </section>
 
-            <h3>Books I offer</h3>
-            <div>
-                {offeredBooks.map(book => (
-                <BookCard key={book.id} {...book} />
-
-                ))}
-            </div>
-
-            <h3>Books Got from Others</h3>
-            <div>
-                {gotBooks.map(book => (
-                   <BookCard key={book.id} {...book} />
-
-                ))}
-            </div>
-          
-
-    </>
-    );
+      <section className="prof-section">
+        <h3 className="prof-heading">Books Got from Others</h3>
+        <div className="prof-grid">
+          {gotBooks.map(b => <BookCard key={b.id} {...b} />)}
+        </div>
+      </section>
+    </main>
+  );
 }
 
 export default Profile;

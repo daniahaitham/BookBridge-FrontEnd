@@ -1,27 +1,40 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Signup from './Signup.jsx';
-import Login from './Login.jsx';
-import AboutUs from './AboutUs.jsx';
-
+import backOne from "../assets/backOne.avif";
+import "../styles/LandingPage.css";
 
 function LandingPage() {
     return (
-        <div>
-            <section>
-                <h1>Discover, Exchange, and Share Books with the Community.</h1>
-                <p>Join a platform where readers connect — sell, borrow, or trade your
-          favorite books anytime.</p>
-            
+    <main className="landing">
+      <section
+        className="landing-hero"
+        style={{ backgroundImage: `url(${backOne})` }}
+      >
+        <div className="landing-overlay" />
+        <div className="landing-content">
+          <h1 className="landing-title">
+            Discover, Exchange,
+            <br />and Share Books with
+            <br />the Community.
+          </h1>
 
-            <div>
-              <Link to="/Signup">Sign Up</Link> 
-               <Link to="/Login">Log In</Link> 
-              <Link to="/AboutUs">About Us | Contact Us</Link>
+          <p className="landing-sub">
+            Join a platform where readers connect — sell, borrow, or trade your
+            favorite books anytime.
+          </p>
+
+        <div className="landing-cta">
+             <Link to="/Signup" className="btn btn-primary">Sign Up</Link>
+             
+             <Link to="/Login" className="btn btn-ghost">Log In</Link>
             </div>
-            </section>
-        </div>
-    );
-}
 
+          <div className="landing-links">
+            <Link to="/AboutUs" className="chip">About us | Contact Us</Link>
+           </div>
+        </div>
+      </section>
+    </main>
+  );
+}
 export default LandingPage;

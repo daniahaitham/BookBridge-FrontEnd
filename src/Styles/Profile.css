@@ -1,0 +1,75 @@
+:root{
+  --page-bg:#fffdf6; --text:#2f3a2f; --muted:#7b8572;
+  --field:#eeeee0; --border:#d7d1b6; --shadow:0 8px 18px rgba(0,0,0,.08);
+}
+
+/* FORCE page to be normal block flow */
+.prof-page{
+  display:block !important;          /* <-- key fix */
+  background:var(--page-bg);
+  color:var(--text);
+  min-height:calc(100vh - 120px);
+  padding:36px 18px 56px;
+  max-width:1100px;
+  margin:0 auto;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+}
+
+/* Titles */
+.prof-title{
+  display:block; width:100%;
+  text-align:center; font-size:28px; font-weight:800; margin:0 0 14px;
+}
+
+/* Ensure each section stacks vertically and spans full width */
+.prof-section{
+  display:block !important;          /* <-- ensures not a flex item row */
+  width:100%;
+  margin-top:28px;
+}
+
+/* Section headings */
+.prof-heading{
+  display:block; width:100%;
+  text-align:center;
+  font-size:20px; font-weight:800;
+  margin:0 0 16px;
+}
+
+/* Profile inputs row */
+.prof-fields{
+  display:flex; justify-content:center; flex-wrap:wrap; gap:100px;
+  margin:8px 0 22px;
+}
+.prof-fields input{
+  min-width:170px; height:38px; padding:0 14px;
+  background:var(--field);
+  border:1.5px solid var(--border);
+  border-radius:10px; text-align:center; outline:none;
+  color:#404040; font-size:13.5px;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.02);
+}
+
+/* The book grid always below its heading */
+.prof-grid{
+  display:grid !important;           /* <-- force grid */
+  grid-template-columns:repeat(3, minmax(200px, 1fr));
+  gap:28px; justify-items:center;
+  margin-bottom:36px; padding:8px 10px 12px;
+}
+
+/* If BookCard has no wrapper/card styles, give a soft card shell */
+.prof-grid > *{
+  width:220px; max-width:100%;
+  background:#fff; border-radius:10px; box-shadow:var(--shadow);
+  padding:10px;
+}
+
+/* Responsive */
+@media (max-width:900px){
+  .prof-grid{ grid-template-columns:repeat(2, minmax(200px,1fr)); }
+}
+@media (max-width:560px){
+  .prof-grid{ grid-template-columns:1fr; }
+  .prof-fields input{ min-width:46%; }
+}
