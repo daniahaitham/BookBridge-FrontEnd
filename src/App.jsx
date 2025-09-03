@@ -11,7 +11,7 @@ import BookCard from "./components/BookCard.jsx";
 import Complaints from "./pages/Complaints.jsx";
 import Profile from "./pages/Profile.jsx";
 import AdminComplaints from "./pages/AdminComplaints.jsx";
-
+import NewBook from "./pages/NewBook.jsx";
 
 
 function App() {
@@ -26,6 +26,7 @@ function App() {
         <Route path="/Home" element={<Home />} />
         <Route path="/SpesificBook/:id" element={<SpesificBook />} />
         <Route path="/Complaints" element={<Complaints />} />
+        <Route path="/NewBook" element={<NewBook />} />
         <Route path="/Profile" element={<Profile />} />
         <Route path="/AdminComplaints" element={<AdminComplaints />} />
       </Routes>

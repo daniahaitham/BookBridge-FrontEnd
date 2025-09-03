@@ -1,6 +1,6 @@
 /* === Complaints.css === */
 :root{
-  --accent: #ff7f7f;       /* title pink/red */
+  --accent: #ee5353;       /* title pink/red */
   --muted: #a7ad95;        /* help text */
   --panel: #f5f6f2;        /* card bg */
   --field: #dfe6cf;        /* input bg */
@@ -8,6 +8,9 @@
   --button-text: #6e5e3a;
 }
 
+.title{
+  color: #ff5b5b;
+}
 section {
   min-height: calc(100vh - 120px); /* leaves room for navbar/footer */
   padding: 28px 16px 40px;

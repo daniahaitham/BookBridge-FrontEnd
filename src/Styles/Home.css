@@ -8,7 +8,7 @@
 .home-container{ max-width:5000px; margin:0 auto; }
 
 .home-title{
-  font-size:29px; font-weight:800; color:#5a5135;
+  font-size:35px; font-weight:800; color:#8f7f51;
   text-align:center; margin: 20px;
 }
 
@@ -16,14 +16,31 @@
 .home-toolbar{ display:flex; gap:10px; justify-content:center; align-items:center; margin:0 0 22px;  }
 .filter-label{ color:#6b654d; font-weight:600; }
 .filter-select{
-  padding:8px 12px; border:1px solid #cfc8b6; border-radius:8px; height: 28px; background:#fff; color:#4a473a;
+  padding:8px 12px; border:1px solid #cfc8b6; border-radius:8px; height: 38px; background:#fff; color:#4a473a;
 }
 
 /* grid */
+/* Good default already */
 .book-grid{
   display:grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap:24px;
+}
+
+/* Phones: allow narrower cards + smaller gaps */
+@media (max-width: 480px){
+  .home-page{ padding:64px 14px 72px; }
+  .home-title{ font-size:28px; }
+  .book-grid{
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap:14px;
+  }
+}
+
+/* Tablets: a little tighter */
+@media (max-width: 768px){
+  .home-title{ font-size:32px; }
+  .book-grid{ gap:18px; }
 }
 
 /* each grid item (wrapper around the card link) */

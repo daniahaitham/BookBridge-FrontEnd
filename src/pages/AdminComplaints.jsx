@@ -1,5 +1,4 @@
-// src/pages/AdminComplaints.jsx
-import React from "react";
+ import React from "react";
 import "../Styles/AdminComplaints.css";
 
 function AdminComplaints() {
@@ -41,8 +40,7 @@ function AdminComplaints() {
                 <td>{r.priority}</td>
                 <td>{r.status}</td>
                 <td className="actions">
-                  <button className="btn ghost">View</button>
-                  <button className="btn">Resolve</button>
+                   <button className="btn">Resolve</button>
                 </td>
               </tr>
             ))}

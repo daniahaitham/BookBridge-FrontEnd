@@ -1,156 +1,171 @@
-/* ========== Book Details — SpesificBook.css ========== */
-:root{
-  --bg: #fffdf6;             /* page background (very light cream) */
-  --fg: #354035;             /* main text (muted deep olive/gray) */
-  --muted: #6f776f;          /* secondary text */
-  --sand: #e7dcbc;           /* sand blocks (tags/footer strip) */
-  --sand-200:#efe6ca;        /* lighter sand */
-  --frame:#b79d66;           /* frame/border (brown-gold) */
-  --pink:#f39ab2;            /* “Availability” label */
+/* General Page Styles */
+.bd-page {
+  display: center;
+  font-family: 'Arial', sans-serif;
+  background-color: #f7f6f1;
+  padding: 40px;
+  color: #5a5135;
 }
 
-/* Reset-ish */
-.bd-page, .bd-wrap, .bd-info, .bd-side { box-sizing: border-box; }
-.bd-page * { margin: 0; padding: 0; }
-
-/* Page */
-.bd-page{
-  background: var(--bg);
-  color: var(--fg);
-  min-height: 100dvh;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
-  line-height: 1.55;
+.bd-title {
+  padding-top: 10px;
+  text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #8f7f51;
 }
 
-/* Outer content width + generous breathing room */
-.bd-wrap{
-  max-width: 1120px;               /* wide like your wireframe */
-  margin: 0 auto;
-  padding: 48px 28px 64px;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr; /* left text / right image */
-  gap: 48px;
+.bd-wrap {
+  
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
 }
 
-/* Heading (Title – Author) */
-.bd-head{
-  font-size: clamp(28px, 2.6vw, 34px);
-  font-weight: 800;
-  letter-spacing: 0.2px;
-  margin-bottom: 14px;
-}
-.bd-head .sep{ margin: 0 8px; }
-
-/* Description paragraph (the long lorem block) */
-.bd-desc{
-  color: var(--muted);
-  font-size: 15.5px;
-  max-width: 56ch;                /* the “wrapped” look in wireframe */
-  margin-bottom: 18px;
+.bd-info {
+  width: 850px;
+  flex: 1;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
 }
 
-/* Tag row (Exchange Type / Price) */
-.bd-tags{
-  display: flex;
-  gap: 14px;
-  margin: 14px 0 22px;
-}
-.tag{
-  display: inline-flex;
-  align-items: center;
-  height: 36px;
-  padding: 0 18px;
-  border-radius: 14px;
-  background: var(--sand);
-  font-size: 14px;
+.bd-head {
+  font-size: 26px;
   font-weight: 700;
-  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.03);
-}
-.tag.light{ background: var(--sand-200); }
-
-/* Owner line + note */
-.bd-owner{
-  font-size: 14.5px;
-  margin: 10px 0 10px;
-}
-.bd-owner strong{ font-weight: 800; }
-
-.bd-note{
-  font-size: 14.5px;
-  color: var(--muted);
-  max-width: 60ch;
+  margin-bottom: 10px;
+  color: #8f7f51;
 }
 
-/* Right side: Availability label + Framed cover */
-.bd-side{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
+.sep {
+  font-weight: 300;
 }
 
-.bd-side-label{
-  font-weight: 800;
-  color: var(--pink);
+.bd-desc {
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.bd-tags {
+  margin-bottom: 20px;
+}
+
+.tag {
+  display: inline-block;
+  background-color: #cfc8b6;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.tag.light {
+  background-color: #f2f1e1;
+}
+
+.bd-owner,
+.bd-note {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.bd-side {
+  width: 300px;
+  flex: 0 0 350px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.bd-side-label {
   font-size: 18px;
-  margin-top: 4px;
+  font-weight: bold;
+  color: #8f7f51;
+  margin-bottom: 15px;
 }
 
-/* Image frame sized like the mock (almost square, roomy border) */
-.bd-frame{
-  width: min(420px, 90%);
-  aspect-ratio: 3 / 4;                     /* classic book portrait */
-
-  border-radius: 6px;
-  position: relative;
- 
-  /* the faint inner gutter */
+.bd-frame {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Cover image fills frame but stays under the cross placeholder */
-.bd-frame img{
-  position: absolute;
-  inset: 0;
+.bd-frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  mix-blend-mode: normal;
-  /* if no image is available, frame shows the X placeholder */
 }
 
-/* “Book not found.” state */
-.bd-empty{
-  max-width: 1120px;
-  margin: 48px auto;
-  padding: 14px 18px;
-  background: #fff;
-  border: 2px dashed var(--sand);
-  color: var(--muted);
-  border-radius: 10px;
+.bd-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #e2e2e2;
+  border-radius: 8px;
 }
+ 
 
-/* Optional footer strip imitation (if your layout has one) */
-.bd-page::after{
-  content: "";
+.reqBook {
   display: block;
-  height: 28px;
-  background: var(--sand-200);
-  margin-top: 48px;
+  width: 100%;
+  padding: 12px;
+  background-color: #b3eb99;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 20px;
 }
 
-/* ---------- Responsiveness ---------- */
-@media (max-width: 980px){
-  .bd-wrap{
-    grid-template-columns: 1fr;
-    gap: 36px;
+/* ================= RESPONSIVE ================= */
+
+/* Tablet and smaller screens */
+@media (max-width: 1024px) {
+  .bd-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  .bd-desc, .bd-note{ max-width: 65ch; }
-  .bd-side{ align-items: flex-start; }
-  .bd-side-label{ margin-left: 6px; }
+
+  .bd-info {
+    width: 100%;
+    max-width: 95%;
+  }
+
+  .bd-side {
+    width: 100%;
+    max-width: 320px;
+    margin-top: 20px;
+  }
 }
-@media (max-width: 520px){
-  .bd-wrap{ padding: 32px 18px 48px; }
-  .bd-head{ font-size: 24px; }
-  .tag{ height: 34px; padding: 0 14px; font-size: 13.5px; }
-  .bd-frame{ width: 100%; }
+
+/* Mobile screens */
+@media (max-width: 600px) {
+  .bd-title {
+    font-size: 28px;
+  }
+
+  .bd-head {
+    font-size: 20px;
+  }
+
+  .bd-info {
+    padding: 15px;
+  }
+
+  .bd-side-label {
+    font-size: 16px;
+  }
+
+  .tag {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
 }
+

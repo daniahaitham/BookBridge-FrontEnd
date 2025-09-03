@@ -21,15 +21,10 @@ function Complaints() {
             alert("Please fill required fields");
             return;
         }
-
           navigate("/Home");
-
-
-
-
     }
 
-        function onChange(e) {
+        function onChange(e) { //here !!
             const { name, value } = e.target;
             setForm({ ...form, [name]: value });
         }
@@ -38,7 +33,7 @@ function Complaints() {
     return (
 
         <section>
-            <h1>Complaints</h1>
+            <h1 className="title">Complaints</h1>
             <p>
                 Please fill the form below to submit your complaint. Our team will review it
         and get back to you as soon as possible.

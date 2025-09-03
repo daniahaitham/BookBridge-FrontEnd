@@ -18,7 +18,7 @@ function AboutUs() {
           </h1>
           <p className="about-note">
             Have a question, feedback, or issue? We’d love to hear from you.
-            Please reach out to us through <strong>+7555 845</strong>. Our team
+            Please reach out to us through <strong>+755 545 845</strong>. Our team
             will respond as soon as possible!
           </p>
         </div>

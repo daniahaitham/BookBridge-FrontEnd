@@ -1,8 +1,9 @@
-/* src/Styles/Landing.css */
-:root{
+ :root{
   --sand:#c9be94; --sand-700:#b1a36f;
   --overlay: rgba(0,0,0,.38);
+
 }
+
 
 /* make viewport sizing reliable */
 html, body, #root { height: 100%; }
@@ -113,6 +114,12 @@ body { margin: 0; }
     height: 48px;                  /* comfortable touch target */
   }
 }
+.landing-cta .btn:focus,
+.landing-cta .btn:active {
+  outline: none;
+  color: inherit;
+}
+
 
 /* chips */
 .landing-links{ margin-top:10px; display:grid; grid-auto-flow:column; gap:8px; }
@@ -126,4 +133,53 @@ body { margin: 0; }
   .landing-cta{ grid-auto-flow: row; width: 100%; }
   .btn{ width: min(360px, 92vw); text-align: center; }
   .landing-links{ grid-auto-flow: row; }
+}
+
+
+/* kill link-state blue + keep colors consistent */
+.landing-cta .btn:link,
+.landing-cta .btn:visited,
+.landing-cta .btn:hover,
+.landing-cta .btn:active,
+.landing-cta .btn:focus {
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+}
+
+/* enforce per-variant text color on all states */
+.landing-cta .btn-primary,
+.landing-cta .btn-primary:link,
+.landing-cta .btn-primary:visited,
+.landing-cta .btn-primary:hover,
+.landing-cta .btn-primary:focus,
+.landing-cta .btn-primary:active {
+  color: #333 !important;
+}
+
+.landing-cta .btn-ghost,
+.landing-cta .btn-ghost:link,
+.landing-cta .btn-ghost:visited,
+.landing-cta .btn-ghost:hover,
+.landing-cta .btn-ghost:focus,
+.landing-cta .btn-ghost:active {
+  color: var(--sand) !important;
+}
+
+
+/* optional nicer focus */
+.landing-cta .btn:focus { box-shadow: 0 0 0 3px rgba(201,190,148,.5); }
+
+/* remove mobile tap flash */
+.landing-cta .btn { -webkit-tap-highlight-color: transparent; }
+/* normalize ALL link states for buttons */
+.landing-cta .btn,
+.landing-cta .btn:link,
+.landing-cta .btn:visited,
+.landing-cta .btn:hover,
+.landing-cta .btn:focus,
+.landing-cta .btn:active {
+  color: inherit !important;       /* stop forced blue/purple */
+  text-decoration: none !important;
+  outline: none;
 }

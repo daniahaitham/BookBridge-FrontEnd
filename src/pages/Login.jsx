@@ -10,9 +10,7 @@ function Login() {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
   function onSubmit(e) {
-    e.preventDefault();
-    console.log("Login submitted:", form);
-  }
+    e.preventDefault();  }
 
   return (
     <main className="login-page">
@@ -27,28 +25,13 @@ function Login() {
           <form onSubmit={onSubmit} className="login-form">
             <div className="input-wrap">
               <span className="input-icon" aria-hidden="true"> </span>
-              <input
-                className="input"
-                name="email"
-                type="email"
-                placeholder="Email"
-                value={form.email}
-                onChange={onChange}
-                required
+              <input className="input" name="email"  type="email" placeholder="Email" value={form.email} onChange={onChange} required
               />
             </div>
 
             <div className="input-wrap">
               <span className="input-icon" aria-hidden="true"> </span>
-              <input
-                className="input"
-                name="password"
-                type="password"
-                placeholder="Password"
-                value={form.password}
-                onChange={onChange}
-                required
-              />
+              <input className="input" name="password" type="password" placeholder="Password" value={form.password} onChange={onChange} required />
             </div>
 
             <button type="submit" className="btn-login">Log in</button>

@@ -32,6 +32,7 @@
 /* Card */
 .login-card {
   width: min(1500px, 150vw);
+
   background: var(--panel);
   border-radius: 16px;
   overflow: hidden;
@@ -43,10 +44,12 @@
 
 /* Left/form side */
 .login-form-side {
-  padding: clamp(28px, 4.2vw, 56px);
+  height: 100% !important;
+  padding: clamp(50px, 4.2vw, 56px);
   display: grid;
   align-content: center;
   gap: 22px;
+  
 }
 
 .login-title--mobile,
@@ -60,8 +63,8 @@
 }
 
 .input-wrap {
-  display: grid;
-  grid-template-columns: 38px 1fr;
+ display: grid;
+   grid-template-columns: 1fr;
   align-items: center;
   background: var(--sage-100);
   border-radius: 12px;

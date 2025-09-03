@@ -1,5 +1,6 @@
 /* Signup.css */
 :root {
+  
   --sand: #c9be94;
   --sand-700: #b1a36f;
   --bronze: #8b7352;
@@ -17,6 +18,7 @@ html, body, #root {
 
 /* page wrapper */
 main {
+  
   min-height: calc(100vh - var(--nav-h) - var(--foot-h));
   padding: calc(var(--nav-h)) 16px calc(var(--foot-h));
   display: flex;
@@ -26,6 +28,7 @@ main {
 
 /* card: form + hello panel */
 main > section {
+  
   width: min(1400px, 100vw);
   display: grid;
   grid-template-columns: 1.25fr 1fr;
@@ -53,8 +56,14 @@ form > div {
   padding: 8px 12px;
   border: 1px solid rgba(0,0,0,.06);
 }
+.content h1,
+.content p {
+   text-align:center !important;
+  margin-inline:auto;
+}
 
 input {
+  
   all: unset;
   width: 100%;
   color: var(--ink);
@@ -83,25 +92,30 @@ button[type="submit"]:hover {
 }
 
 /* right hello panel */
-aside {
+.content {
+  text-align: center;
   background: var(--bronze);
   color: #fff;
   padding: 24px 28px;
   display: grid;
   place-items: center;
+  height: 100%;
+  border-radius: 12px 0 0 12px;
 }
-aside > div {
+.content > div {
+  border-radius: 0 12px 12px 0;
   text-align: center;
   width: 100%;
   max-width: 360px;
 }
-aside h1 {
+.content h1 {
+  
   margin: 0 0 8px;
   font-size: 36px;
   font-weight: 800;
   letter-spacing: .4px;
 }
-aside p {
+content p {
   margin: 0;
   opacity: .92;
 }
@@ -111,14 +125,14 @@ aside p {
   main > section {
     grid-template-columns: 1fr;
   }
-  aside {
+  content {
     order: -1; /* move hello to top */
     border-radius: 12px 12px 0 0;
   }
-  main > section > div {
+  main > content > div {
     border-radius: 0 0 12px 12px;
   }
-  aside > div {
+  content > div {
     text-align: center;
   }
 }

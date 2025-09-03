@@ -1,16 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import backOne from "../assets/backOne.avif";
 import "../styles/LandingPage.css";
+import backOne from "../assets/backOne.avif";
 
 function LandingPage() {
     return (
     <main className="landing">
-      <section
-        className="landing-hero"
-        style={{ backgroundImage: `url(${backOne})` }}
-      >
-        <div className="landing-overlay" />
+<section className="landing-hero" style={{ backgroundImage: `url(${backOne})` }}> {/*HERE !*/}
+          <div className="landing-overlay" />
         <div className="landing-content">
           <h1 className="landing-title">
             Discover, Exchange,
@@ -25,7 +22,6 @@ function LandingPage() {
 
         <div className="landing-cta">
              <Link to="/Signup" className="btn btn-primary">Sign Up</Link>
-             
              <Link to="/Login" className="btn btn-ghost">Log In</Link>
             </div>
 
@@ -33,7 +29,7 @@ function LandingPage() {
             <Link to="/AboutUs" className="chip">About us | Contact Us</Link>
            </div>
         </div>
-      </section>
+       </section>
     </main>
   );
 }
