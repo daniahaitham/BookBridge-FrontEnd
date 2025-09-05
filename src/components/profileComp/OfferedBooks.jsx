@@ -1,14 +1,13 @@
 import BookCard from "../BookCard";
 
-
+export default function OfferedBooks({ books, onEdit, onDelete, editingId, setEditingId, onSave }) {  if (!books?.length) return <p>No books yet.</p>;
 //here i will render the recived data without fetch
-export default function OfferedBooks({ books, onDelete }) {
-  if (!books?.length) return <p>No books yet.</p>;
 
   return (
     <div className="prof-grid">
-      {books.map(b => (
-        <div key={b.id} className="book-with-footer">
+      {books.map((b) => 
+      
+      (<div key={b.id} className="book-with-footer">
           <BookCard
             id={b.id}
             title={b.title}
@@ -17,18 +16,35 @@ export default function OfferedBooks({ books, onDelete }) {
             cover={b.cover}
           />
 
-
-
-
           <div className="card-footer">
-            <button className="delete-btn" onClick={() => onDelete(b.id)}>
-              Delete
-            </button>
+
+            <>{/*remember the flow: in parent i sent the prponme called onEdit that will run the startedit function that excepts from me a book to st its id using the useState i defines  */}</>
+            <button className="edit-btn" onClick={() => onEdit(b)}>Edit</button>
+            <button className="delete-btn" onClick={() => onDelete(b.id)}>Delete</button>
           </div>
 
 
+         <>{/*here*/} </>
+            {editingId === b.id && (
+            
+            <form className="edit-form" onSubmit={(e) => {
+                   e.preventDefault();
+                const fd = new FormData(e.currentTarget);
+                const values = Object.fromEntries(fd.entries()); 
+                onSave(b.id, values);  
+            }}>
+            
+              <input name="title" defaultValue={b.title} placeholder="Title" />
+              <input name="author" defaultValue={b.author} placeholder="Author" />
+              <input name="price" defaultValue={b.price} placeholder="Price" />
+              <input name="category" defaultValue={b.category} placeholder="Category" />
+              <textarea name="description" defaultValue={b.description} placeholder="Description" />
 
-          
+              <div className="edit-actions">
+                <button type="submit">Save</button>
+               </div>
+            </form>
+          )}
         </div>
       ))}
     </div>

@@ -117,11 +117,25 @@
 .delete-btn:hover {
   background: #e89a9a;
 }
-s
+
+.edit-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #b5d3e4;
+  color: #519cda;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.edit-btn:hover {
+  background: #7bb1dd;
+}
 
 
 .req-main{ display:flex; flex-direction:column; gap:2px; }
-.req-title{ font-weight:800; color:#6e6a4e; font-size:15px; }
+.req-title{ font-weight:8 00; color:#6e6a4e; font-size:15px; }
 .req-name{ color:#7b8572; font-weight:700; font-size:13px; }
 
 .chip{

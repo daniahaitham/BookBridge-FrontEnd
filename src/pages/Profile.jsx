@@ -19,15 +19,12 @@ export default function Profile() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+
+
+
+
   const [gotBooks] = useState([]);
-
-
-
-
-
-
-
-
 
    const accept = (id) => {
     gfdecfv(prev =>
@@ -56,6 +53,10 @@ const INCOMING_REQUESTS = [
   { id: 11, bookTitle: "Deep Learning", requesterName: "Sara Khalid", status: "rejected" },
 ];
 const [incomingRequests, setIncomingRequests] = useState(INCOMING_REQUESTS);
+
+
+
+
 
 
 
@@ -99,10 +100,10 @@ useEffect(() => {//using data from thier i want to update a state
     }
   })();
 }, []);
+ 
 
 
-
-
+//this fucntin will be sent as prp t o the onDelte.
 const handleDelete = async (bookId) => {
   try {
     const stored = localStorage.getItem("user");
@@ -124,6 +125,33 @@ const handleDelete = async (bookId) => {
      setOfferedBooks((prev) => prev.filter((b) => b.id !== data.id));
   } catch (e) {
     setError(e.message || "Delete failed");
+  }
+};
+
+
+//EDTING:
+
+const [editingId, setEditingId] = useState(null);//to remember which book is edited
+const startEdit = (book) => setEditingId(book.id);//when i edit i willcall it to set the id on the editid
+//i send them all becouse i have to change thier 
+  
+const saveEdit = async (bookId, values) => {
+  try {
+    const user = JSON.parse(localStorage.getItem("user") || "null");
+    if (!user?.id) throw new Error("Not logged in");
+
+    const res = await fetch(`${BASE}/api/books/${bookId}?userid=${user.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Update failed");
+
+     setOfferedBooks(prev => prev.map(b => (b.id === bookId ? data.book : b)));//replace the whole book when u find it 
+    setEditingId(null); // close the form
+  } catch (e) {
+    setError(e.message || "Update failed");
   }
 };
 
@@ -154,8 +182,8 @@ const handleDelete = async (bookId) => {
         </div>
 
         <div className="prof-grid">
-        <OfferedBooks books={offeredBooks} onDelete={handleDelete} />
-            
+          <OfferedBooks books={offeredBooks} onEdit={startEdit} onDelete={handleDelete} editingId={editingId}
+          setEditingId={setEditingId} onSave={saveEdit} />
         </div>
       </section>
 
