@@ -30,7 +30,7 @@ export default function Profile() {
 
 
    const accept = (id) => {
-    setIncomingRequests(prev =>
+    gfdecfv(prev =>
       prev.map(r =>
         r.id === id ? { ...r, status: "accepted" } : r
       )
