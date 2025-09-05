@@ -1,15 +1,40 @@
-import { useState } from "react";
+import { useState ,useEffect } from "react";
 import {Link} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import BookCard from "../components/BookCard.jsx";
-import { books } from "../data/books.js";
 import "../Styles/Home.css";
 import AdminStatistic from "../components/AdminStatistic.jsx";
 
 
 function Home() {
+const BASE = "http://localhost:5000";
+
+
+//changes : 
+const [books, setBooks] = useState([]);
 
 const navigate = useNavigate();
+
+
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch(`${BASE}/api/books/all`);
+
+
+        if (!res.ok) 
+        throw new Error(`HTTP ${res.status}`);
+
+        const j = await res.json();//from strings to JSON
+          setBooks(j.books || []);//the empty one for safty if reciving undefined  
+            } catch (e) {
+         console.error("Failed to load books:", e);     
+         }
+    })();
+  }, []);
+
+
 
   return (
     <main className="home-page">
@@ -32,7 +57,14 @@ const navigate = useNavigate();
           </select>
         </div>
 
+
+
         <section className="book-grid">
+
+          <>{/*change on static data  */}</>
+
+         
+
           {books.map((b) => (
 
             //it is for each book creating a new div 
@@ -41,6 +73,12 @@ const navigate = useNavigate();
             </div>
           ))}
         </section>
+
+
+
+
+       
+        
          <AdminStatistic />
       </div>
 
