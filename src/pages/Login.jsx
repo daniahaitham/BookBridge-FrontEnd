@@ -37,7 +37,7 @@ function Login() {
       return;
     }
 
-    localStorage.setItem("user", JSON.stringify(data.user));//ican converting frm json becouse localstorae only read text data
+    localStorage.setItem("user", JSON.stringify(data.user));//ican converting frm JS becouse localstorae only read string data
 
      navigate("/Home"); // go wherever you want after login
   } catch {

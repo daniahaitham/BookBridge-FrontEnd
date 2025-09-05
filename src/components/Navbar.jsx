@@ -9,6 +9,7 @@ function Navbar() {
   const [open, openMenu] = useState(false);//inisilize to false is needed here 
 
   function handleLogout() {
+     localStorage.removeItem("user"); 
      navigate("/login");
     openMenu(false);
   }
