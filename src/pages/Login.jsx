@@ -1,16 +1,52 @@
  
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; 
 import "../Styles/Login.css";  
 
+const BASE = "http://localhost:5000"; 
+
 function Login() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({ email: "", password: "" });
 
   function onChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
-  function onSubmit(e) {
-    e.preventDefault();  }
+
+  
+
+
+  async function onSubmit(e) {
+  e.preventDefault();
+
+  try {
+    const res = await fetch(`${BASE}/api/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: form.email,
+        password: form.password
+      })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Login failed");
+      return;
+    }
+
+    localStorage.setItem("user", JSON.stringify(data.user));//ican converting frm json becouse localstorae only read text data
+
+     navigate("/Home"); // go wherever you want after login
+  } catch {
+    alert("Network Poblrem ");
+  }
+}
+
+
+
 
   return (
     <main className="login-page">
