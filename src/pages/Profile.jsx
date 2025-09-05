@@ -1,16 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BookCard from "../components/BookCard";
+import OfferedBooks from "../components/profileComp/OfferedBooks";
 import "../Styles/Profile.css";
-import book from "../assets/book.jpg";
-import book1 from "../assets/book1.webp";
-import book2 from "../assets/book2.jpg";
-import book3 from "../assets/book3.jpg";
 
-
+const BASE = "http://localhost:5000";
 export default function Profile() {
 
   
+
+
+   const [profile, setProfile] = useState({
+    name: "",
+    email: "",
+    password: "",
+    phone: ""
+  });
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [gotBooks] = useState([]);
+
+
+
+
+
+
+
+
+
    const accept = (id) => {
     setIncomingRequests(prev =>
       prev.map(r =>
@@ -28,24 +46,6 @@ export default function Profile() {
   };
 
 
-   const [profile, setProfile] = useState({
-    name: "",
-    email: "",
-    password: "",
-    phone: ""
-  });
-
-  const [offeredBooks] = useState([
-    { id: 4, title: "Clean Code", owner: "Me", exchangeType: "Sell", cover: book },
-    { id: 5, title: "Deep Learning", owner: "Me", exchangeType: "Exchange", cover: book1 },
-  ]);
-
-
-  const [gotBooks] = useState([
-    { id: 6, title: "Dune", owner: "Ali", exchangeType: "Borrowed", cover: book2 },
-    { id: 7, title: "Atomic Habits", owner: "Sara", exchangeType: "Borrowed", cover: book3 },
-  ]);
-
   const MY_REQUESTS = [
   { id: 1, bookTitle: "The Pragmatic Programmer", requesterName: "Me",   status: "pending"  },
   { id: 2, bookTitle: "Design Patterns",          requesterName: "Me",   status: "accepted" },
@@ -55,6 +55,53 @@ const INCOMING_REQUESTS = [
   { id: 10, bookTitle: "Clean Code",    requesterName: "Ahmad Ali",   status: "pending"  },
   { id: 11, bookTitle: "Deep Learning", requesterName: "Sara Khalid", status: "rejected" },
 ];
+const [incomingRequests, setIncomingRequests] = useState(INCOMING_REQUESTS);
+
+
+
+
+
+
+
+
+//my books:
+const [offeredBooks, setOfferedBooks] = useState([]);
+
+useEffect(() => {//using data from thier i want to update a state 
+
+
+
+  const stored = localStorage.getItem("user");//this gives back a string
+    const user = stored ? JSON.parse(stored) : null; //PASRE BACK TO js SO I CAN USE IT 
+      if (!user || !user.id) {
+        setLoading(false);
+        return;  // stop early if no user
+      }
+
+
+
+
+  (async () => {
+    try {
+      const res = await fetch(`${BASE}/api/books?userid=${user.id}`);//res have obj include headers and body..
+      //the ? where the backend know that here is the paramter 
+      const data = await res.json();//conver this raw to JS obj
+
+
+      if (!res.ok) {
+       throw new Error(data.error || "Failed to load books");
+      } 
+      setOfferedBooks(data.books || []);// the empty array is for safty if tnohgin returned
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  })();
+}, []);
+
+
+
 
 
   return (
@@ -81,8 +128,8 @@ const INCOMING_REQUESTS = [
         </div>
 
         <div className="prof-grid">
-          {offeredBooks.map(b => ( <BookCard key={b.id} {...b} /> //Passing fields of book as prpos per each card 
-          ))}
+         <OfferedBooks books={offeredBooks} />
+            
         </div>
       </section>
 
@@ -123,7 +170,7 @@ const INCOMING_REQUESTS = [
         <section className="prof-section">
           <h3 className="prof-heading">Requests by others for my books</h3>
           <div className="prof-grid">
-            {INCOMING_REQUESTS.map(r => (
+            {incomingRequests.map(r => (
               <div key={r.id} className="book-with-footer">
                 <BookCard
                   id={r.id}
@@ -136,8 +183,11 @@ const INCOMING_REQUESTS = [
 
                 <div className="card-footer">
                   {r.status === "pending" ? (
-                   <>  <button className="btn-circle danger" onClick={() => reject(r.id)}>accept</button>
-                      <button className="btn-circle ok" onClick={() => accept(r.id)}>Reject</button> </> 
+                   <>
+                   <button className="btn-circle ok" onClick={() => accept(r.id)}>Accept</button>
+                    <button className="btn-circle danger" onClick={() => reject(r.id)}>Reject</button>
+
+                       </> 
                     ) : ( <span>{r.status}</span> )}
                 </div>
 
