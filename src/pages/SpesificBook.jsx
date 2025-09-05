@@ -1,11 +1,59 @@
 import { useParams } from "react-router-dom";
-import { books } from "../data/books";
-import "../styles/SpesificBook.css";
+import { useEffect, useState } from "react";
+
+ import "../styles/SpesificBook.css";
+const BASE = "http://localhost:5000";
 
 function SpesificBook() {
   const { id } = useParams();//get id from url
-  const book = books.find((b) => String(b.id) === id);//string becouse id is stringfrom url
 
+  const [book, setBook] = useState(null);
+
+     useEffect(() => {
+    async function loadBook() {
+      try {
+        const res = await fetch(`${BASE}/api/books/${id}`);
+        const data = await res.json();
+        setBook(data.book || null);
+      } catch (err) {
+        console.error("Failed to load book:", err);
+        setBook(null);
+      }
+    }
+    loadBook();
+  }, [id]);
+
+
+const rawUser = localStorage.getItem("user");
+const currentUser = rawUser ? JSON.parse(rawUser) : null;
+const requesterid = currentUser?.id || currentUser?.userid;
+
+
+      async function handleRequest() {
+        try {
+          const res = await fetch(`${BASE}/api/req/${book.id}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              requesterid, 
+              ownerid: book.userid
+            }),
+          });
+
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || "Request failed");
+
+          alert("Request sent successfully!");
+        } catch (err) {
+          console.error(err);
+          alert(err.message);
+        }
+      }
+
+
+
+
+ 
   if (!book) return <p className="bd-empty">Book not found.</p>;
 
   return (
@@ -18,24 +66,28 @@ function SpesificBook() {
               {book.title} <span className="sep">–</span> {book.author}
           </h2>
 
+
+
           <p className="bd-desc">
-            {book.description ||  "Book Description – BLABLABLBALABLABALBALBLBLBALABLABALB…"}
+            {book.description || " Description "}
           </p>
 
           <div className="bd-tags">
-            <span className="tag">{book.exchangeType || "Exchange Type"}</span>
+            <span className="tag">{book.category || "Exchange Type"}</span>
             <span className="tag light">{book.price ? book.price : "Price / Duration"}</span>{/*dont forget its called ternary opearator  */}
           </div>
 
           <p className="bd-owner">
-            <strong>Owner name :</strong> {book.owner || "—"}
-            <span>{book.phone || ""}</span>
+
+            <>{/*here thier are info from the users table !! */}</>
+            <strong>Owner name :</strong> {book.userid || "—"}
+            <span>{book.phone ||" "}</span>
           </p>
 
           <p className="bd-note">
             <strong>Note by owner:</strong>{" "}
-            {book.note ||
-              "… BALBALABLABALBALBALBLABBALBALBALBALBALBALABLABL…"}
+            {book.notebyowner ||
+              "… note"}
           </p>
         </div>
 
@@ -50,7 +102,7 @@ function SpesificBook() {
              :(<div className="bd-placeholder" aria-hidden="true" />)}
           </div>
         </aside>
-          <button className="reqBook">Request Book</button>
+          <button className="reqBook" onClick={handleRequest}>Request Book</button>
       </section>
 
     
