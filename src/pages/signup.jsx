@@ -1,6 +1,11 @@
+
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Signup.css";
+
+const BASE = "http://localhost:5000";
+
 
 function Signup() {
   const navigate = useNavigate();
@@ -25,15 +30,43 @@ function Signup() {
 }
 
 
-  function onSubmit(e) {
-    e.preventDefault();
- 
-    if (!form.name || !form.email || !form.password) {
-      alert("Please fill required fields");
+async function onSubmit(e) {
+  e.preventDefault();
+
+  if (!form.name || !form.email || !form.password) {
+    alert("Please fill required fields");
+    return;
+  }
+  if (form.password !== form.confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${BASE}/api/auth/signup`, {//interpolation here 
+      method: "POST",//this option is built in fetch telling the server the action
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({//turn from js to request row to be sent in the URL ( just like we used in the postman !)
+        name: form.name,
+        email: form.email,
+        phonenum: form.phone, 
+        password: form.password
+      })
+    });
+
+    const data = await res.json();//server rel=ply is raw test so i have to reconvert to json
+    if (!res.ok) {//also ok is built in the fetch ( just like we used to see in the error types and so on)
+      alert(data.message || "Signup failed");
       return;
     }
+
+    alert("Account created! Please log in.");
     navigate("/login");
+  } catch (err) {
+    alert("Network error");
   }
+}
+
 
   return (
     <main>
