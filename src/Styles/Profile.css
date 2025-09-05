@@ -87,6 +87,39 @@
     display:flex; align-items:center; justify-content:space-between;
 
 }
+
+.book-with-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  padding: 10px;
+}
+
+.card-footer {
+  margin-top: 8px;
+}
+
+.delete-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #f5c6c6;
+  color: #7a1f1f;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.delete-btn:hover {
+  background: #e89a9a;
+}
+s
+
+
 .req-main{ display:flex; flex-direction:column; gap:2px; }
 .req-title{ font-weight:800; color:#6e6a4e; font-size:15px; }
 .req-name{ color:#7b8572; font-weight:700; font-size:13px; }

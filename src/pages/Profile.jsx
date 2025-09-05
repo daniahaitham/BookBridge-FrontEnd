@@ -103,6 +103,32 @@ useEffect(() => {//using data from thier i want to update a state
 
 
 
+const handleDelete = async (bookId) => {
+  try {
+    const stored = localStorage.getItem("user");
+    const user = stored ? JSON.parse(stored) : null;
+    if (!user?.id) 
+      {throw new Error("Not logged in");}
+
+    const res = await fetch(`${BASE}/api/books/${bookId}?userid=${user.id}`, {
+      method: "DELETE",
+    });
+    const data = await res.json();
+
+    if (!res.ok || !data.ok) {
+      throw new Error(data.error || "Failed to delete book");
+    }
+
+
+    //passing the current offerBooks to the "prev"
+     setOfferedBooks((prev) => prev.filter((b) => b.id !== data.id));
+  } catch (e) {
+    setError(e.message || "Delete failed");
+  }
+};
+
+
+
 
   return (
     <main className="prof-page">
@@ -128,7 +154,7 @@ useEffect(() => {//using data from thier i want to update a state
         </div>
 
         <div className="prof-grid">
-         <OfferedBooks books={offeredBooks} />
+        <OfferedBooks books={offeredBooks} onDelete={handleDelete} />
             
         </div>
       </section>
