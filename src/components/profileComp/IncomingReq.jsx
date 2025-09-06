@@ -10,7 +10,7 @@ export default function IncomingReq({ requests, onAccept, onReject }) {
           <BookCard
             id={r.bookid}
             title={r.title}         
-            owner={`Requester #${r.requesterid}`}
+            owner={r.requesterid}
             exchangeType="Request"
             cover={r.cover}
           />

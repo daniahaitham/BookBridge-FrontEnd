@@ -1,5 +1,4 @@
-// components/profileComp/MyRequests.jsx
-import BookCard from "../BookCard";
+ import BookCard from "../BookCard";
 
 export default function MyRequests({ requests = [] }) {
   if (!requests.length) return <p>No requests yet.</p>;
@@ -11,7 +10,7 @@ export default function MyRequests({ requests = [] }) {
           <BookCard
             id={r.bookid}
             title={r.title}
-            owner={`Owner #${r.ownerid}`}
+            owner={r.ownerid}
             exchangeType="Requested"
             cover={r.cover}
           />

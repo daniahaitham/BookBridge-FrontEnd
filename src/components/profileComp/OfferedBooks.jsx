@@ -1,12 +1,14 @@
 import BookCard from "../BookCard";
 
-export default function OfferedBooks({ books, onEdit, onDelete, editingId, setEditingId, onSave }) {  if (!books?.length) return <p>No books yet.</p>;
+export default function OfferedBooks({ books, onEdit, onDelete, editingId, onSave })
+ {  if (!books?.length) return <p>No books yet.</p>;
 //here i will render the recived data without fetch
 
   return (
     <div className="prof-grid">
       {books.map((b) => 
       
+      //the key here is only for safty to avoid bugs in react dome 
       (<div key={b.id} className="book-with-footer">
           <BookCard
             id={b.id}
@@ -24,13 +26,14 @@ export default function OfferedBooks({ books, onEdit, onDelete, editingId, setEd
           </div>
 
 
-         <>{/*here*/} </>
+         <>{/*here is the use of the id i saved in the parent */} </>
+         
             {editingId === b.id && (
             
             <form className="edit-form" onSubmit={(e) => {
-                   e.preventDefault();
-                const fd = new FormData(e.currentTarget);
-                const values = Object.fromEntries(fd.entries()); 
+                e.preventDefault();
+                const fd = new FormData(e.currentTarget);//this crrate the formdata (collecting the inputs)
+                const values = Object.fromEntries(fd.entries()); //now chnage this form obj to js obj ( in parent i will convert to json when i use it in the )
                 onSave(b.id, values);  
             }}>
             
