@@ -9,7 +9,7 @@ const BASE = "http://localhost:5000";
 function NewBook() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
-title: "",
+  title: "",
   author: "",
   price: "",
   category: "sell",     

@@ -42,6 +42,10 @@ export default function OfferedBooks({ books, onEdit, onDelete, editingId, onSav
               <input name="price" defaultValue={b.price} placeholder="Price" />
               <input name="category" defaultValue={b.category} placeholder="Category" />
               <textarea name="description" defaultValue={b.description} placeholder="Description" />
+              <input name="notebyowner" defaultValue={b.notebyowner} placeholder="Note by owner" />
+              <input name="cover" defaultValue={b.cover} placeholder="Cover URL" />
+              <input name="availability" defaultValue={b.availability} placeholder="Availability" />
+
 
               <div className="edit-actions">
                 <button type="submit">Save</button>

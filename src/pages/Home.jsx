@@ -1,38 +1,48 @@
 import { useState ,useEffect } from "react";
-import {Link} from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BookCard from "../components/BookCard.jsx";
-import "../Styles/Home.css";
 import AdminStatistic from "../components/AdminStatistic.jsx";
+import AdminComplaints from "./AdminComplaints.jsx";
+import "../Styles/Home.css";
 
 
 function Home() {
 const BASE = "http://localhost:5000";
-
-
-//changes : 
 const [books, setBooks] = useState([]);
 
-const navigate = useNavigate();
-
-
+ const navigate = useNavigate(); 
 
   useEffect(() => {
     (async () => {
       try {
         const res = await fetch(`${BASE}/api/books/all`);
 
-
         if (!res.ok) 
         throw new Error(`HTTP ${res.status}`);
 
         const j = await res.json();//from strings to JSON
+        const rows = Array.isArray(j) ? j : (j.books || []);
           setBooks(j.books || []);//the empty one for safty if reciving undefined  
             } catch (e) {
-         console.error("Failed to load books:", e);     
+         console.error("Failed to load books:", e);
+          setBooks([]); //keep it as array even when eeror
          }
     })();
   }, []);
+
+
+
+
+
+
+//ADMIN WORK 
+const [user, setUser] = useState(null);
+
+      useEffect(() => {
+        const saved = localStorage.getItem("user");
+        if (saved) setUser(JSON.parse(saved));
+      }, []);
+      const isAdmin = user?.is_admin === true;
 
 
 
@@ -57,40 +67,42 @@ const navigate = useNavigate();
           </select>
         </div>
 
-
-
-        <section className="book-grid">
-
-          <>{/*change on static data  */}</>
-
-         
-
-          {books.map((b) => (
-
-            //it is for each book creating a new div 
-            <div className="book-grid-item" > {/*HERE! from where id  */}
-              <BookCard {...b} /> {/*passing the book props TO the card*/}
-            </div>
-          ))}
-        </section>
+          <section className="book-grid">
+            {books.map((b) => (
+              <div key={b.id} className="book-grid-item">
+                <BookCard {...b} />
+              </div>
+            ))}
+          </section>
 
 
 
 
-       
-        
-         <AdminStatistic />
-      </div>
+
+
+
+      {isAdmin && ( //this is the if jsx sysntax , it cheack the admin if truthy it somplte, if false (&&) this thing retrun false 
+       <> 
+           <AdminStatistic books={books} /> 
+            <div style={{ marginTop: 16 }}>
+            <AdminComplaints />
+             </div>
+       </>
+      )}
+  
+
 
     
 
-      <button
-        className="complaint-btn"
-        onClick={() => navigate("/Complaints")}
-      >
-        + Add your Complaint for Admins
-      </button>
-       
+      {!isAdmin && (
+        <button
+            className="complaint-btn"
+            onClick={() => navigate("/Complaints")}
+        >
+            + Add your Complaint for Admins
+        </button>
+      )}
+       </div>
     </main>
   );
 }

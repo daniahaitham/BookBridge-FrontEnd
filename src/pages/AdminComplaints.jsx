@@ -1,19 +1,38 @@
- import React from "react";
+import React from "react";
 import "../Styles/AdminComplaints.css";
+import { useEffect, useState } from "react";
+const BASE = "http://localhost:5000";
 
 function AdminComplaints() {
-  const rows = [
-    { id: 101, from: "Alice", title: "Late delivery", desc: "Book arrived 3 days late.", priority: "High", status: "Open" },
-    { id: 102, from: "Omar",  title: "Damaged cover", desc: "Cover bent at the corner.", priority: "Medium", status: "In-review" },
-    { id: 103, from: "Sara",  title: "Wrong edition", desc: "Received 2nd ed instead of 3rd.", priority: "High", status: "Resolved" },
-    { id: 104, from: "Yazan", title: "No response",  desc: "Owner is not replying.",        priority: "Low",  status: "Open" },
-    { id: 105, from: "Lina",  title: "Price mismatch",desc: "Price different than post.",    priority: "Medium", status: "Open" },
-  ];
+
+  const [complaints, setComplaints] = useState([]);
+ 
+
+ 
+
+  useEffect(() => {
+    (async ()=> {
+      try {
+         const res = await fetch(`${BASE}/api/complaints`, {
+          headers: { "x-role": "admin" }, //here i am sending a custom header with the req
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        const rows = (data.complaints || []);
+        setComplaints(rows);
+        
+      } catch (e) {
+          e.error
+      }
+    })();
+  }, []);
+
+
+
 
   return (
     <main className="adm-page">
       <div className="adm-header">
-        <h4 className="adm-welcome">Welcome to Admin Dashboard</h4>
         <h2 className="adm-title">Complaint Page</h2>
       </div>
 
@@ -26,24 +45,31 @@ function AdminComplaints() {
               <th>Title/Sub</th>
               <th>Description</th>
               <th>Priority</th>
-              <th>Status</th>
-              <th>Action</th>
+            
             </tr>
           </thead>
+
           <tbody>
-            {rows.map(r => (
-              <tr key={r.id}>
-                <td>{r.id}</td>
-                <td>{r.from}</td>
-                <td>{r.title}</td>
-                <td className="desc">{r.desc}</td>
-                <td>{r.priority}</td>
-                <td>{r.status}</td>
-                <td className="actions">
-                   <button className="btn">Resolve</button>
-                </td>
+
+
+
+
+            {complaints.length === 0 ? ( 
+              <tr>
+                <td colSpan="7" style={{ textAlign: "center" }}>No complaints</td>
               </tr>
-            ))}
+            ) : (
+
+              complaints.map((c) => (  
+                <tr key={c.id}>
+                  <td>{c.id}</td>
+                  <td>{c.userid ?? c.from}</td> 
+                  <td>{c.subject ?? c.title}</td>  
+                  <td >{c.description }</td> 
+                  <td>{c.priority}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

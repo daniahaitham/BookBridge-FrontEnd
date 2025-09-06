@@ -1,15 +1,15 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
- import "../styles/SpesificBook.css";
+import "../styles/SpesificBook.css";
 const BASE = "http://localhost:5000";
 
 function SpesificBook() {
-  const { id } = useParams();//get id from url
+  const { id } = useParams();//to get id from url
 
   const [book, setBook] = useState(null);
 
-     useEffect(() => {
+  useEffect(() => {
     async function loadBook() {
       try {
         const res = await fetch(`${BASE}/api/books/${id}`);
@@ -21,33 +21,35 @@ function SpesificBook() {
       }
     }
     loadBook();
-  }, [id]);
+  }, [id]); //i used not the onMount we used to use , here i used onMount + onUpdate 
 
 
-const rawUser = localStorage.getItem("user");
-const currentUser = rawUser ? JSON.parse(rawUser) : null;
-const requesterid = currentUser?.id || currentUser?.userid;
 
 
-      async function handleRequest() {
-        try {
-          const res = await fetch(`${BASE}/api/req/${book.id}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              requesterid, 
-              ownerid: book.userid
-            }),
-          });
+//will be used on request
+const user = localStorage.getItem("user");
+const requesterid = user.id;
 
-          const data = await res.json();
-          if (!res.ok) throw new Error(data.error || "Request failed");
 
-          alert("Request sent successfully!");
-        } catch (err) {
+async function handleRequest() {
+    try {
+      const res = await fetch(`${BASE}/api/req/${book.id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+      requesterid, 
+      ownerid: book.userid
+      }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Request failed");
+
+      alert("Request sent successfully!");
+      } catch (err) {
           console.error(err);
           alert(err.message);
-        }
+      }
       }
 
 
@@ -63,7 +65,8 @@ const requesterid = currentUser?.id || currentUser?.userid;
         <section className="bd-wrap">
           <div className="bd-info">
             <h2 className="bd-head">
-              {book.title} <span className="sep">–</span> {book.author}
+              {book.title} <span className="sep">–</span> 
+              {book.author}
           </h2>
 
 
@@ -74,7 +77,7 @@ const requesterid = currentUser?.id || currentUser?.userid;
 
           <div className="bd-tags">
             <span className="tag">{book.category || "Exchange Type"}</span>
-            <span className="tag light">{book.price ? book.price : "Price / Duration"}</span>{/*dont forget its called ternary opearator  */}
+            <span className="tag light">{book.price || "Price / Duration"}</span>
           </div>
 
           <p className="bd-owner">
