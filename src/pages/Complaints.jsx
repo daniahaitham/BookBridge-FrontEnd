@@ -1,13 +1,11 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../Styles/Complaints.css";
+ import "../Styles/Complaints.css";
 
 
 function Complaints() {
-    const navigate = useNavigate();
-
+ 
     const [form, setForm] = useState({
         subject: "",
         description: "",
@@ -15,23 +13,46 @@ function Complaints() {
     });
 
     //handle the submission error
-    function onSubmit(e) {
-        e.preventDefault();
-        if (!form.subject || !form.description) {
-            alert("Please fill required fields");
-            return;
-        }
-          navigate("/Home");
+  async function onSubmit(e) {
+  e.preventDefault();
+  if (!form.subject || !form.description) {
+    alert("Please fill required fields");
+    return;
+  }
+
+
+  //I HAVE TO KNOW whom is the user did this req
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  try {
+    const res = await fetch("http://localhost:5000/api/complaints", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userid: user.id || null,
+        subject: form.subject,
+        description: form.description,
+        priority: form.priority
+      })
+    });
+
+    alert("Complaint submitted successfully!");
+
+    } catch (err) {
+              alert(err.message);
+    }
     }
 
-        function onChange(e) { //here !!
-            const { name, value } = e.target;
-            setForm({ ...form, [name]: value });
+
+     function onChange(e) { //here !!
+
+      //targer is always the html eleement that triggred the chanfe
+      const { name, value } = e.target;//dont forget this is destructuring , = e.target.name
+      setForm({ ...form, [name]: value });
         }
 
 
     return (
-
         <section>
             <h1 className="title">Complaints</h1>
             <p>
@@ -44,7 +65,7 @@ function Complaints() {
                     <input type="text" placeholder="Subject" value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} />
                     <textarea placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}></textarea>
 
-                    <select name="priority" value={form.priority} onChange={onChange}>
+                    <select name="priority" value={form.priority} onChange={onChange}> <>{/*from here is the name and value  */}</>
                       <option value="low">Low</option>
                       <option value="medium">Medium</option>
                       <option value="high">High</option>

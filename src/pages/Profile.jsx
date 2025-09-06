@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import BookCard from "../components/BookCard";
 import OfferedBooks from "../components/profileComp/OfferedBooks";
 import "../Styles/Profile.css";
+import IncomingReq from "../components/profileComp/IncomingReq.jsx";
+import MyRequests from "../components/profileComp/MyRequests.jsx";
 
 const BASE = "http://localhost:5000";
 export default function Profile() {
@@ -24,45 +26,11 @@ export default function Profile() {
 
 
 
-  const [gotBooks] = useState([]);
-
-   const accept = (id) => {
-    gfdecfv(prev =>
-      prev.map(r =>
-        r.id === id ? { ...r, status: "accepted" } : r
-      )
-    );
-  };
-
-   const reject = (id) => {
-    setIncomingRequests(prev =>
-      prev.map(r =>
-        r.id === id ? { ...r, status: "rejected" } : r
-      )
-    );
-  };
-
-
-  const MY_REQUESTS = [
-  { id: 1, bookTitle: "The Pragmatic Programmer", requesterName: "Me",   status: "pending"  },
-  { id: 2, bookTitle: "Design Patterns",          requesterName: "Me",   status: "accepted" },
-];
-
-const INCOMING_REQUESTS = [
-  { id: 10, bookTitle: "Clean Code",    requesterName: "Ahmad Ali",   status: "pending"  },
-  { id: 11, bookTitle: "Deep Learning", requesterName: "Sara Khalid", status: "rejected" },
-];
-const [incomingRequests, setIncomingRequests] = useState(INCOMING_REQUESTS);
+const [gotBooks, setGotBooks] = useState([]);
 
 
 
-
-
-
-
-
-
-
+const [myRequests, setMyRequests] = useState([]);
 
 
 //my books:
@@ -155,7 +123,86 @@ const saveEdit = async (bookId, values) => {
   }
 };
 
+//tracking incomeing req:
 
+    const [incomingRequests, setIncomingRequests] = useState([]);
+  
+
+    useEffect(() => {
+            const user = JSON.parse(localStorage.getItem("user") || "{}");
+            const ownerid = user.id || user.userid;
+            if (!ownerid) return;  
+
+
+          (async () => {
+              try {
+                console.log("PATCH to:", `${BASE}/api/req/${id}`);
+                const res = await fetch(`${BASE}/api/req/incoming?ownerid=${ownerid}`);
+                const j = await res.json();
+
+                setIncomingRequests(j.requests || []); //this udates the states with the needed ata
+              } catch {
+                setIncomingRequests([]);//settin empty 
+              }
+            })();
+          }, []);
+
+
+                
+     const accept = async (id) => {
+      const reqObj = incomingRequests.find(r => r.id === id);
+
+            try {
+              const res = await fetch(`${BASE}/api/req/${id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status: "accepted" })
+              });
+              const { request } = await res.json();
+              if (!res.ok) throw new Error("Update failed");
+
+
+              setGotBooks(prev => [
+                  {
+                    id: reqObj.bookid,
+                    title: reqObj.title,
+                    cover: reqObj.cover,
+                    owner: `Owner #${reqObj.ownerid}`,
+                    exchangeType: "accepted"
+                  },
+                  ...prev
+                ]);
+
+              // update state 
+              setIncomingRequests(prev =>
+                prev.map(r => (r.id === id ? { ...r, status: request.status } : r))
+              );
+            } catch (e) {
+              console.error(e);
+            }
+          };
+
+
+      const reject = (id) =>
+        setIncomingRequests((prev) => prev.map((r) => (r.id === id ? { ...r, status: "rejected" } : r)));
+//trachkin my borroed books:
+
+useEffect(() => {
+  const stored = localStorage.getItem("user");
+  const user = stored ? JSON.parse(stored) : null;
+  if (!user?.id) return;
+
+  (async () => {
+    try {
+      const res = await fetch(`${BASE}/api/req/got?requesterid=${user.id}`);
+      const data = await res.json();
+      setGotBooks(data.requests || []);
+    } catch (e) {
+      console.error("Failed to load got books:", e);
+      setGotBooks([]);
+    }
+  })();
+}, []);
 
 
   return (
@@ -166,7 +213,7 @@ const saveEdit = async (bookId, values) => {
         <div className="prof-field">{profile.name || "Name"}</div>
         <div className="prof-field">{profile.email || "Email"}</div>
         <div className="prof-field">
-          {profile.password ? "••••••" : "Password"} {/*to not desplay password if esxsist */}
+          {profile.password ? "••••••" : "Password"} 
         </div>
         <div className="prof-field">{profile.phone || "Phone num"}</div>
       </div>
@@ -188,7 +235,7 @@ const saveEdit = async (bookId, values) => {
       </section>
 
 
-      {/* the books i offer  */} 
+      {/* the books i got from others   */} 
 
         <section className="prof-section">
           <h3 className="prof-heading">Books Got from Others</h3>
@@ -201,55 +248,20 @@ const saveEdit = async (bookId, values) => {
 
          {/*REQUESTS TRACKING */}
         {/* my requests */}
-          <section className="prof-section">
-            <h3 className="prof-heading">My Requests for others' books</h3>
-            <div className="prof-grid">
-              {MY_REQUESTS.map(r => (
-                <div key={r.id} className="book-with-footer">
-                  <BookCard
-                    id={r.id}
-                    title={r.bookTitle}
-                    owner={r.requesterName}
-                    exchangeType="Requested"
-                  />
-                  <div className="card-footer">
-                    <span>{r.status}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
+        <section className="prof-section">
+          <h3 className="prof-heading">My Requests for others' books</h3>
+          <MyRequests requests={myRequests} />
+        </section>
+       
+
+
+
 
       {/* incoming requests */}
-        <section className="prof-section">
-          <h3 className="prof-heading">Requests by others for my books</h3>
-          <div className="prof-grid">
-            {incomingRequests.map(r => (
-              <div key={r.id} className="book-with-footer">
-                <BookCard
-                  id={r.id}
-                  title={r.bookTitle}
-                  owner={r.requesterName}
-                  exchangeType="Request"
-                  
-                />
-
-
-                <div className="card-footer">
-                  {r.status === "pending" ? (
-                   <>
-                   <button className="btn-circle ok" onClick={() => accept(r.id)}>Accept</button>
-                    <button className="btn-circle danger" onClick={() => reject(r.id)}>Reject</button>
-
-                       </> 
-                    ) : ( <span>{r.status}</span> )}
-                </div>
-
-
-            </div>
-          ))}     
-        </div>
-        </section>
+            <section className="prof-section">
+              <h3 className="prof-heading">Requests by others for my books</h3>
+              <IncomingReq requests={incomingRequests} onAccept={accept} onReject={reject} />
+            </section>
     </main>
   );
 }
